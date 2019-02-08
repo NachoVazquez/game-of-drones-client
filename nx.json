@@ -7,5 +7,15 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "apps-game-of-drones": {
+      "tags": ["god"]
+    },
+    "apps-game-of-drones-e2e": {
+      "tags": []
+    },
+    "god-shared": {
+      "tags": ["god shared"]
+    }
+  }
 }
