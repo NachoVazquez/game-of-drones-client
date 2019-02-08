@@ -1,3 +1,4 @@
+import { LayoutModule } from './features/layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -29,6 +30,7 @@ import {
     GodSharedModule,
     BrowserModule,
     BrowserAnimationsModule,
+    LayoutModule,
 
     HttpClientModule,
     NxModule.forRoot(),
