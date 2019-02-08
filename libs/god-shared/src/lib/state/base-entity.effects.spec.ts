@@ -33,7 +33,7 @@ class TestBaseEffects extends BaseEntityEffects<TestBaseModel> {
 }
 
 @Injectable()
-class BaseModelService extends BaseCrudService<TestBaseModel> {
+class BaseModelService extends BaseCrudService<TestBaseModel, any> {
   constructor() {
     super('', null, null);
   }

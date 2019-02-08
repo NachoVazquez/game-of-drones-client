@@ -11,7 +11,7 @@ export abstract class BaseEntityEffects<T extends BaseEntity<any>> {
   constructor(
     protected type: new () => T,
     protected actions$: Actions,
-    protected baseService: BaseCrudService<T>
+    protected baseService: BaseCrudService<T, any>
   ) {}
 
   public getEntityById$(): Observable<Action> {

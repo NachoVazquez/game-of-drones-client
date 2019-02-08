@@ -1,9 +1,5 @@
 import { ForbiddenError } from './../../error-handling/forbidden-error';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
@@ -21,7 +17,7 @@ import { InternalServerError } from '../../error-handling/internal-server.error'
 import { retryBackoff, RetryBackoffConfig } from 'backoff-rxjs';
 
 @Injectable()
-export class BaseCrudService<T> {
+export class BaseCrudService<TEntity, TKey> {
   public url: string;
 
   protected readonly retryConfig: RetryBackoffConfig = {
@@ -38,8 +34,8 @@ export class BaseCrudService<T> {
     this.url = url;
   }
 
-  public getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.url + '/getAll').pipe(
+  public getAll(): Observable<TEntity[]> {
+    return this.http.get<TEntity[]>(this.url + '/getAll').pipe(
       publishLast(),
       refCount(),
       catchError(error => {
@@ -49,8 +45,8 @@ export class BaseCrudService<T> {
     );
   }
 
-  public get(id: any): Observable<T> {
-    return this.http.get<T>(this.url + '/get/' + id).pipe(
+  public get(id: TKey): Observable<TEntity> {
+    return this.http.get<TEntity>(this.url + '/get/' + id).pipe(
       publishLast(),
       refCount(),
       catchError(error => {
@@ -67,7 +63,7 @@ export class BaseCrudService<T> {
     sortDir: string,
     columnsToReturn: string = '*',
     tableToQuery: string = null
-  ): Observable<T[]> {
+  ): Observable<TEntity[]> {
     const fUrl =
       this.url +
       '/getWithPaginationAndFilter?pageNumber=' +
@@ -81,7 +77,7 @@ export class BaseCrudService<T> {
       '&columnsToReturn=' +
       columnsToReturn +
       (tableToQuery ? '&tableToQuery=' + tableToQuery : '');
-    return this.http.get<T[]>(fUrl).pipe(
+    return this.http.get<TEntity[]>(fUrl).pipe(
       publishLast(),
       refCount(),
       catchError(error => {
@@ -91,8 +87,8 @@ export class BaseCrudService<T> {
     );
   }
 
-  public create(resource: T): Observable<T> {
-    return this.http.post<T>(this.url + '/post/', resource).pipe(
+  public create(resource: TEntity): Observable<TEntity> {
+    return this.http.post<TEntity>(this.url + '/post/', resource).pipe(
       publishLast(),
       refCount(),
       catchError(error => {
@@ -102,8 +98,8 @@ export class BaseCrudService<T> {
     );
   }
 
-  public update(id, resource: T): Observable<T> {
-    return this.http.put<T>(this.url + '/put/' + id, resource).pipe(
+  public update(id: TKey, resource: TEntity): Observable<TEntity> {
+    return this.http.put<TEntity>(this.url + '/put/' + id, resource).pipe(
       publishLast(),
       refCount(),
       catchError(error => {
@@ -113,8 +109,8 @@ export class BaseCrudService<T> {
     );
   }
 
-  public delete(id) {
-    return this.http.delete<T>(this.url + '/delete/' + id).pipe(
+  public delete(id: TKey) {
+    return this.http.delete<TEntity>(this.url + '/delete/' + id).pipe(
       publishLast(),
       refCount(),
       catchError(error => {
