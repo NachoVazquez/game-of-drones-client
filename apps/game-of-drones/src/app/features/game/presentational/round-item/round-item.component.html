@@ -1,0 +1,21 @@
+<article>
+  
+  <h2>Player: {{ playerName }}</h2>
+
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Move"
+      [(ngModel)]="selectedMove"
+      name="selected-move"
+    >
+      <mat-option
+        *ngFor="let move of (playerMoves | keys_eased)"
+        [value]="move.key"
+      >
+        {{ move.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button>Next</button>
+</article>

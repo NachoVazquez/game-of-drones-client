@@ -7,12 +7,15 @@ import { BaseEntity, PaginationResult } from '../models';
 import { BaseCrudService } from '../services';
 
 @Injectable()
-export class BaseDataSource<T extends BaseEntity<any>> extends DataSource<T> {
+export class BaseDataSource<
+  T extends BaseEntity<TKey>,
+  TKey
+> extends DataSource<T> {
   protected data$: BehaviorSubject<T[]>;
 
   public currentLength = 0;
 
-  constructor(protected service: BaseCrudService<T>) {
+  constructor(protected service: BaseCrudService<T, TKey>) {
     super();
 
     this.data$ = new BehaviorSubject([]);
