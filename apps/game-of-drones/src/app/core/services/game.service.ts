@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { publishLast, catchError } from 'rxjs/operators';
 import { retryBackoff } from 'backoff-rxjs';
+import { Round } from '../models/round.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameService extends BaseCrudService<Game, number> {
@@ -24,5 +25,12 @@ export class GameService extends BaseCrudService<Game, number> {
         retryBackoff(this.retryConfig),
         catchError(error => this.handleError(error))
       );
+  }
+
+  createRound(roundToCreate: Round): Observable<Round> {
+    return this.http.post<Round>(this.url + '/createRound', roundToCreate).pipe(
+      retryBackoff(this.retryConfig),
+      catchError(error => this.handleError(error))
+    );
   }
 }
