@@ -1,9 +1,10 @@
 import { GameService } from './../../../core/services/game.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, share } from 'rxjs/operators';
 import { Game } from '../../../core/models/game.model';
 import { Observable } from 'rxjs';
+import { Round } from '../../../core/models/round.model';
 
 @Component({
   selector: 'god-rounds',
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class GameComponent implements OnInit {
   protected currentGame$: Observable<Game>;
+  protected gameId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,11 +20,21 @@ export class GameComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.currentGame$ = this.route.paramMap.pipe(
+    this.currentGame$ = this.getGameFromUrl().pipe(share());
+  }
+
+  private getGameFromUrl(): Observable<Game> {
+    return this.route.paramMap.pipe(
       switchMap(params => {
-        const gameId = +params.get('id');
-        return this.gameService.get(gameId);
+        this.gameId = +params.get('id');
+        return this.gameService.get(this.gameId);
       })
     );
+  }
+
+  completeRound(round: Round) {
+    this.gameService
+      .createRound(round)
+      .pipe(switchMap(() => this.gameService.get(this.gameId)));
   }
 }

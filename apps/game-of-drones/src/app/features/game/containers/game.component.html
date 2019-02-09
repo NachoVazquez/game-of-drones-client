@@ -1,9 +1,41 @@
 <section>
   <mat-horizontal-stepper>
-    <mat-step label="Round 1">
-       <god-round-item [playerName]=""></god-round-item> 
+    <mat-step
+      [editable]="false"
+      label="Round 1"
+      [completed]="(currentGame$ | async).rounds.length > 0"
+    >
+      <god-round
+        [currentGame$]="currentGame$"
+        [roundNumber]="1"
+        (completeRound)="completeRound($event)"
+      ></god-round>
     </mat-step>
-    <mat-step label="Round 2"> </mat-step>
-    <mat-step label="Round 3"> </mat-step>
+    <mat-step
+      [editable]="false"
+      label="Round 2"
+      [completed]="(currentGame$ | async).rounds.length > 1"
+    >
+      <god-round
+        [currentGame$]="currentGame$"
+        [roundNumber]="2"
+        (completeRound)="completeRound($event)"
+      ></god-round>
+    </mat-step>
+    <mat-step
+      [editable]="false"
+      label="Round 3"
+      [completed]="(currentGame$ | async).rounds.length > 2"
+    >
+      <god-round
+        [currentGame$]="currentGame$"
+        [roundNumber]="3"
+        (completeRound)="completeRound($event)"
+      ></god-round>
+    </mat-step>
+
+    <mat-step label="Results">
+      <!-- SHOW RESULTS STAT -->
+    </mat-step>
   </mat-horizontal-stepper>
 </section>
