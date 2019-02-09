@@ -1,8 +1,17 @@
 <section>
   <h1>Round{{ roundNumber }}</h1>
   <!-- Player1 Turn -->
-  <god-round-item [playerName]=""></god-round-item>
+  <god-round-item
+    *ngIf="!player1Move"
+    [playerName]="(currentGame$ | async).player1Name"
+    (moveSelected)="player1MoveSelected($event)"
+  ></god-round-item>
 
   <!-- Player2 Turn -->
-  <god-round-item [playerName]=""></god-round-item>
+  <god-round-item
+    *ngIf="player1Move"
+    [playerName]="(currentGame$ | async).player2Name"
+    [previousRoundMove]="player1Move"
+    (moveSelected)="player2MoveSelected($event)"
+  ></god-round-item>
 </section>
