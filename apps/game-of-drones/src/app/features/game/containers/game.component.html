@@ -1,41 +1,100 @@
-<section>
-  <mat-horizontal-stepper>
+<section class="h-100-p mat-white-500-bg">
+  <!-- Game -->
+  <mat-horizontal-stepper
+    *ngIf="(currentGame$ | async) as currentGame; else noGameBlock"
+  >
     <mat-step
       [editable]="false"
       label="Round 1"
-      [completed]="(currentGame$ | async).rounds.length > 0"
+      completed="currentGame.rounds.length > 0"
     >
       <god-round
         [currentGame$]="currentGame$"
         [roundNumber]="1"
-        (completeRound)="completeRound($event)"
+        (completeRound)="completeRound($event, 1)"
+        [roundReset$]="roundReset$.asObservable()"
       ></god-round>
     </mat-step>
     <mat-step
       [editable]="false"
       label="Round 2"
-      [completed]="(currentGame$ | async).rounds.length > 1"
+      [completed]="currentGame.rounds.length > 1"
     >
       <god-round
         [currentGame$]="currentGame$"
         [roundNumber]="2"
-        (completeRound)="completeRound($event)"
+        (completeRound)="completeRound($event, 2)"
+        [roundReset$]="roundReset$.asObservable()"
       ></god-round>
     </mat-step>
     <mat-step
       [editable]="false"
       label="Round 3"
-      [completed]="(currentGame$ | async).rounds.length > 2"
+      [completed]="currentGame.rounds.length > 2"
     >
       <god-round
         [currentGame$]="currentGame$"
         [roundNumber]="3"
-        (completeRound)="completeRound($event)"
+        (completeRound)="completeRound($event, 3)"
+        [roundReset$]="roundReset$.asObservable()"
+      ></god-round>
+    </mat-step>
+
+    <mat-step
+      [editable]="false"
+      label="Round 4"
+      [completed]="currentGame.rounds.length > 3 || isGameOver()"
+    >
+      <god-round
+        [currentGame$]="currentGame$"
+        [roundNumber]="4"
+        (completeRound)="completeRound($event, 4)"
+        [roundReset$]="roundReset$.asObservable()"
+      ></god-round>
+    </mat-step>
+
+    <mat-step
+      [editable]="false"
+      label="Round 5"
+      [completed]="currentGame.rounds.length > 4 || isGameOver()"
+    >
+      <god-round
+        [currentGame$]="currentGame$"
+        [roundNumber]="5"
+        (completeRound)="completeRound($event, 5)"
+        [roundReset$]="roundReset$.asObservable()"
       ></god-round>
     </mat-step>
 
     <mat-step label="Results">
       <!-- SHOW RESULTS STAT -->
+      <god-game-over [currentGame$]="currentGame$"></god-game-over>
     </mat-step>
   </mat-horizontal-stepper>
+  <!-- /Game -->
+
+  <!-- Accumulated Results -->
+
+  <!-- /Accumulated Results -->
+
+  <!-- Rounds Results -->
+  <mat-tab-group
+    mat-stretch-tabs
+    [dynamicHeight]="true"
+    color="accent"
+    *ngIf="!isGameOver() && (currentGame$ | async) as game"
+  >
+    <mat-tab *ngFor="let round of game?.rounds; let index = index">
+      <ng-template mat-tab-label>Round {{ index + 1 }} Results</ng-template>
+      <h4 class="winner-stats">
+        {{ getRoundWinner(game, round) }} Won Playing
+        {{ PlayerMoves[round.winnerMove] }}
+      </h4>
+    </mat-tab>
+  </mat-tab-group>
+  <!-- Rounds Results -->
+
+  <ng-template #noGameBlock>
+    <h1 class="text-center">Game not available</h1>
+  </ng-template>
 </section>
