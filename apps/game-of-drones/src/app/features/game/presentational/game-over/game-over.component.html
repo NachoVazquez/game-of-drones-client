@@ -1,0 +1,28 @@
+<section
+  class="game-over-section"
+  *ngIf="(currentGame$ | async) as game"
+  fxLayout="column"
+  fxLayoutAlign="center
+  center"
+>
+  <h1 class="text-center game-over-header">We Have a WINNER!!!!</h1>
+  <h2 class="text-center winner-header">
+    {{ getGameWinner(game) }} is the new EMPEROR!
+  </h2>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div *ngFor="let round of game.rounds; let i = index">
+      <h3>Round {{ i + 1 }} Winner: {{ getRoundWinner(game, round) }}</h3>
+    </div>
+  </div>
+
+  <div
+    fxLayout="column"
+    fxLayoutAlign="end center"
+    class="play-again-button"
+    fxFlex="1 1 100%"
+  >
+    <button mat-flat-button color="accent" [routerLink]="['/home']">
+      Play Again
+    </button>
+  </div>
+</section>
