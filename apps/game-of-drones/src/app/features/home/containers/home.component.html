@@ -1,12 +1,13 @@
-<section class="h-100-p" fxLayout="column" fxLayoutAlign="center center">
-  <h1>WELCOME TO THE GAME OF DRONES</h1>
+<section class="h-100-p" fxLayout="column" fxLayoutAlign="start center">
+  <h1 class="welcome-message">WELCOME TO THE GAME OF DRONES</h1>
   <form
+    class="game-form"
     [formGroup]="gameForm"
     (ngSubmit)="createGame()"
     fxLayout="column"
     fxLayoutAlign="center center"
   >
-    <mat-card>
+    <mat-card class="w-100-p">
       <mat-card-header>
         <mat-card-title>Enter Player's Names</mat-card-title>
         <!-- <mat-card-subtitle>Enter Player's Names</mat-card-subtitle> -->
