@@ -22,15 +22,22 @@ export class GameService extends BaseCrudService<Game, number> {
     return this.http
       .post<Game>(this.url + '/createByPlayersName', playersData)
       .pipe(
-        retryBackoff(this.retryConfig),
-        catchError(error => this.handleError(error))
+        catchError(error => this.handleError(error)),
+        retryBackoff(this.retryConfig)
       );
   }
 
-  createRound(roundToCreate: Round): Observable<Round> {
-    return this.http.post<Round>(this.url + '/createRound', roundToCreate).pipe(
-      retryBackoff(this.retryConfig),
-      catchError(error => this.handleError(error))
+  createRound(roundToCreate: Round): Observable<Game> {
+    return this.http.patch<Game>(this.url + '/createRound', roundToCreate).pipe(
+      catchError(error => this.handleError(error)),
+      retryBackoff(this.retryConfig)
+    );
+  }
+
+  getGameWithPlayersById(id: number): Observable<Game> {
+    return this.http.get<Game>(this.url + '/getGameWithPlayersById/' + id).pipe(
+      catchError(error => this.handleError(error)),
+      retryBackoff(this.retryConfig)
     );
   }
 }
