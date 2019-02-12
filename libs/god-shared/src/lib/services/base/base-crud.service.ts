@@ -22,6 +22,7 @@ export class BaseCrudService<TEntity, TKey> {
 
   protected readonly retryConfig: RetryBackoffConfig = {
     initialInterval: 1000,
+    maxRetries: 8,
     shouldRetry: (error: ServerError) =>
       !(error instanceof UnauthorizedError || error instanceof ForbiddenError)
   };
@@ -157,6 +158,13 @@ export class BaseCrudService<TEntity, TKey> {
       );
 
       return throwError(new UnauthorizedError(error));
+    }
+
+    if (error.status === 409) {
+      this.snack.open(
+        'Error: There was a conflict processing your request, ' + error.message,
+        'Close'
+      );
     }
 
     if (error.status === 500) {
