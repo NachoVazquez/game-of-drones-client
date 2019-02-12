@@ -10,5 +10,7 @@ export interface Game extends BaseEntity<number> {
   player1RoundsWon: number;
   player2RoundsWon: number;
 
+  roundsToWin: number;
+
   rounds: Round[];
 }
