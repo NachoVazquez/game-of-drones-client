@@ -19,7 +19,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   fillerNav = [
     {
       id: 'home',
-      title: 'Dashboard',
+      title: 'Home',
       type: 'item',
       icon: 'email',
       url: '/home'
