@@ -1,21 +1,29 @@
 <article>
-  
-  <h2>Player: {{ playerName }}</h2>
+  <h2 class="player-name-header">Player: {{ playerName }}</h2>
 
-  <mat-form-field>
-    <mat-select
-      placeholder="Select Move"
-      [(ngModel)]="selectedMove"
-      name="selected-move"
-    >
-      <mat-option
-        *ngFor="let move of (playerMoves | keys_eased)"
-        [value]="move.key"
+  <div class="round-actions" fxLayout="row" fxLayoutAlign="space-evenly center">
+    <mat-form-field class="move-selector">
+      <mat-select
+        placeholder="Select Move"
+        [(ngModel)]="selectedMove"
+        name="selected-move"
       >
-        {{ move.value }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+        <mat-option
+          *ngFor="let move of (playerMoves | keys)"
+          [value]="move.key"
+        >
+          {{ move.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <button mat-button>Next</button>
+    <button
+      class="next-button"
+      mat-flat-button
+      color="accent"
+      (click)="selectMove()"
+    >
+      Next
+    </button>
+  </div>
 </article>

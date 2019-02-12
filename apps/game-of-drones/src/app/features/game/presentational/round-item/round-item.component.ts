@@ -3,7 +3,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'god-round-item',
-  templateUrl: 'round-item.component.html'
+  templateUrl: 'round-item.component.html',
+  styleUrls: ['round-item.component.scss']
 })
 export class RoundItemComponent implements OnInit {
   @Input() playerName: string;
@@ -18,4 +19,8 @@ export class RoundItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  selectMove() {
+    this.moveSelected.emit(this.selectedMove);
+  }
 }
