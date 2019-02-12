@@ -1,17 +1,20 @@
-<section>
-  <h1>Round{{ roundNumber }}</h1>
-  <!-- Player1 Turn -->
-  <god-round-item
-    *ngIf="!player1Move"
-    [playerName]="(currentGame$ | async).player1Name"
-    (moveSelected)="player1MoveSelected($event)"
-  ></god-round-item>
+<section class="round-section" fxLayout="column" fxLayoutAlign="start center">
+  <h1 class="round-header">Round {{ roundNumber }}</h1>
 
-  <!-- Player2 Turn -->
-  <god-round-item
-    *ngIf="player1Move"
-    [playerName]="(currentGame$ | async).player2Name"
-    [previousRoundMove]="player1Move"
-    (moveSelected)="player2MoveSelected($event)"
-  ></god-round-item>
+  <div class="w-100-p" fxFlex="1 1 100%">
+    <!-- Player1 Turn -->
+    <god-round-item
+      *ngIf="!player1Move"
+      [playerName]="(currentGame$ | async).player1Name"
+      (moveSelected)="player1MoveSelected($event)"
+    ></god-round-item>
+
+    <!-- Player2 Turn -->
+    <god-round-item
+      *ngIf="player1Move"
+      [playerName]="(currentGame$ | async).player2Name"
+      [previousRoundMove]="player1Move"
+      (moveSelected)="player2MoveSelected($event)"
+    ></god-round-item>
+  </div>
 </section>
