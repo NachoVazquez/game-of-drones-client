@@ -8,5 +8,9 @@ export const appRoutes: Routes = [
     path: 'game/:id',
     loadChildren: './features/game/game.module#GameModule'
   },
+  {
+    path: 'statistics',
+    loadChildren: './features/statistics/statistics.module#StatisticsModule'
+  },
   { path: '**', redirectTo: 'home' }
 ];
