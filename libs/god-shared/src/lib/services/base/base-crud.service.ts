@@ -23,8 +23,7 @@ export class BaseCrudService<TEntity, TKey> {
   protected readonly retryConfig: RetryBackoffConfig = {
     initialInterval: 1000,
     maxRetries: 8,
-    shouldRetry: (error: ServerError) =>
-      !(error instanceof UnauthorizedError || error instanceof ForbiddenError)
+    shouldRetry: (error: ServerError) => error instanceof ServerDown
   };
 
   constructor(
