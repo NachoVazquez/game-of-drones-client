@@ -1,5 +1,5 @@
 export interface GlobalStatistics {
-  RegisteredPlayers: number;
-  GamesPlayed: number;
-  RoundsPlayed: number;
+  registeredPlayers: number;
+  gamesPlayed: number;
+  roundsPlayed: number;
 }

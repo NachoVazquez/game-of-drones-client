@@ -1,0 +1,166 @@
+<section fxLayout="column" fxLayoutAlign="start start">
+  <!-- Player Statistics -->
+  <div class="w-100-p">
+    <h1 class="stat-section-header">Player Statistics</h1>
+
+    <!-- Search player section -->
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-evenly start"
+      fxLayout.xs="column"
+      fxLayoutAlign.xs="center center"
+    >
+      <h4 class="stats-indications">Search for player stats</h4>
+      <form [formGroup]="searchForm">
+        <mat-form-field class="stats-searcher">
+          <input formControlName="search" matInput placeholder="Player Name" />
+          <mat-icon matSuffix>search</mat-icon>
+          <mat-hint>Search will be performed as you write</mat-hint>
+        </mat-form-field>
+      </form>
+    </div>
+    <!-- / Search player section -->
+
+    <!-- Player Data Section -->
+    <div
+      class="mb-32"
+      *ngIf="(playerStats$ | async) as playerStats; else elseBlock"
+    >
+      <h2 class="player-name">Player: {{ playerStats.playerName }}</h2>
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="space-evenly start"
+        fxLayout.xs="column"
+        fxLayoutAlign.xs="center stretch"
+      >
+        <!-- Games Won -->
+        <mat-card class="stats-card">
+          <mat-card-header>
+            <mat-card-title class="cards-title">Games Won</mat-card-title>
+          </mat-card-header>
+
+          <mat-divider> </mat-divider>
+
+          <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+            <span class="accent-500-fg stats-number">{{
+              playerStats.gamesWon
+            }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Games Lost -->
+        <mat-card class="stats-card">
+          <mat-card-header>
+            <mat-card-title class="cards-title">Games Lost</mat-card-title>
+          </mat-card-header>
+
+          <mat-divider> </mat-divider>
+
+          <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+            <span class="accent-500-fg stats-number">{{
+              playerStats.gamesLost
+            }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Rounds Won -->
+        <mat-card class="stats-card">
+          <mat-card-header color="accent">
+            <mat-card-title class="cards-title">Rounds Won</mat-card-title>
+          </mat-card-header>
+
+          <mat-divider> </mat-divider>
+
+          <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+            <span class="accent-500-fg stats-number">{{
+              playerStats.roundsWon
+            }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Rounds Lost -->
+        <mat-card class="stats-card">
+          <mat-card-header color="accent">
+            <mat-card-title class="cards-title">Rounds Lost</mat-card-title>
+          </mat-card-header>
+
+          <mat-divider> </mat-divider>
+
+          <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+            <span class="accent-500-fg stats-number">{{
+              playerStats.roundsLost
+            }}</span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <ng-template #elseBlock>
+      <h1 class="text-center warn-400-fg mb-32">
+        ...No Player Found
+      </h1></ng-template
+    >
+    <!-- / Player Data Section -->
+  </div>
+  <!-- / Player Statistics -->
+
+  <!-- Global Statistics -->
+  <div class="w-100-p pb-100" *ngIf="(globalStatistics$ | async) as stats">
+    <h1 class="stat-section-header">Global Statistics</h1>
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-evenly start"
+      fxLayout.xs="column"
+      fxLayoutAlign.xs="center stretch"
+    >
+      <!-- Registered Players -->
+      <mat-card class="stats-card">
+        <mat-card-header>
+          <mat-card-title class="cards-title"
+            >Registered Players</mat-card-title
+          >
+        </mat-card-header>
+
+        <mat-divider> </mat-divider>
+
+        <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+          <span class="accent-500-fg stats-number">{{
+            stats.registeredPlayers
+          }}</span>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Games Played -->
+      <mat-card class="stats-card">
+        <mat-card-header>
+          <mat-card-title class="cards-title">Games Played</mat-card-title>
+        </mat-card-header>
+
+        <mat-divider> </mat-divider>
+
+        <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+          <span class="accent-500-fg stats-number">{{
+            stats.gamesPlayed
+          }}</span>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Rounds Played -->
+      <mat-card class="stats-card">
+        <mat-card-header color="accent">
+          <mat-card-title class="cards-title">Rounds Played</mat-card-title>
+        </mat-card-header>
+
+        <mat-divider> </mat-divider>
+
+        <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+          <span class="accent-500-fg stats-number">{{
+            stats.roundsPlayed
+          }}</span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- / Global Statistics -->
+</section>
