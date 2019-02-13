@@ -82,12 +82,14 @@
     mat-stretch-tabs
     [dynamicHeight]="true"
     color="accent"
-    *ngIf="!isGameOver() && (currentGame$ | async) as game"
+    *ngIf="(currentGame$ | async) && !isGameOver2(currentGame$ | async)"
   >
-    <mat-tab *ngFor="let round of game?.rounds; let index = index">
+    <mat-tab
+      *ngFor="let round of (currentGame$ | async)?.rounds; let index = index"
+    >
       <ng-template mat-tab-label>Round {{ index + 1 }} Results</ng-template>
       <h4 class="winner-stats">
-        {{ getRoundWinner(game, round) }} Won Playing
+        {{ getRoundWinner(currentGame$ | async, round) }} Won Playing
         {{ PlayerMoves[round.winnerMove] }}
       </h4>
     </mat-tab>

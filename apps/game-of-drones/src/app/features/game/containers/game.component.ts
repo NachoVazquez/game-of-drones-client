@@ -44,8 +44,6 @@ export class GameComponent implements OnInit {
   protected gameId: number;
   protected currentGame: Game;
 
-  protected roundsPlayed: Round[] = [];
-
   protected roundReset$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   protected mainStepper$: BehaviorSubject<
@@ -67,7 +65,6 @@ export class GameComponent implements OnInit {
     } else {
       this.mainStepper.selectedIndex = this.currentGame.rounds.length;
     }
-    this.roundsPlayed = [...this.currentGame.rounds];
     this.cd.detectChanges();
   }
 
@@ -94,9 +91,6 @@ export class GameComponent implements OnInit {
   }
 
   completeRound(round: Round, roundNumber: number) {
-    this.roundsPlayed.push({ player1Move: null, player2Move: null });
-    console.log(this.roundsPlayed);
-
     round.gameId = this.gameId;
     if (round.player1Move === round.player2Move) {
       this.roundReset$.next(roundNumber);
@@ -109,7 +103,7 @@ export class GameComponent implements OnInit {
               this.currentGameSubject$.next(game);
               // this.roundsPlayed.push(game.rounds[game.rounds.length - 1]);
 
-              if (this.isGameOver()) {
+              if (this.isGameOver2(game)) {
                 this.mainStepper.selectedIndex =
                   this.mainStepper.steps.length - 1;
               } else {
@@ -126,6 +120,13 @@ export class GameComponent implements OnInit {
     return (
       this.currentGame.player1RoundsWon >= this.currentGame.roundsToWin ||
       this.currentGame.player2RoundsWon >= this.currentGame.roundsToWin
+    );
+  }
+
+  isGameOver2(game: Game) {
+    return (
+      game.player1RoundsWon >= game.roundsToWin ||
+      game.player2RoundsWon >= game.roundsToWin
     );
   }
 
